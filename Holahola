@@ -1,0 +1,262 @@
+utility-services/
+├── index.html
+├── style.css
+├── script.js
+└── server.js
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Utility Services</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>Utility Services</h1>
+        <nav>
+            <ul>
+                <li><a href="#home">Home</a></li>
+                <li><a href="#data">Buy Data</a></li>
+                <li><a href="#electricity">Pay Electricity</a></li>
+                <li><a href="#subscriptions">TV Subscriptions</a></li>
+                <li><a href="#account">Account</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section id="home">
+        <h2>Welcome to Utility Services!</h2>
+        <p>Buy data bundles, pay for electricity, and subscribe to TV services conveniently.</p>
+    </section>
+
+    <section id="data">
+        <h2>Buy Data</h2>
+        <form id="data-form">
+            <label for="network">Select Network:</label>
+            <select id="network">
+                <option value="MTN">MTN</option>
+                <option value="Airtel">Airtel</option>
+                <option value="Glo">Glo</option>
+                <option value="9mobile">9mobile</option>
+            </select>
+            <label for="data-amount">Data Amount:</label>
+            <input type="text" id="data-amount">
+            <button type="submit">Buy Data</button>
+        </form>
+    </section>
+
+    <section id="electricity">
+        <h2>Pay Electricity</h2>
+        <form id="electricity-form">
+            <label for="meter-number">Meter Number:</label>
+            <input type="text" id="meter-number">
+            <label for="amount">Amount:</label>
+            <input type="text" id="amount">
+            <button type="submit">Pay</button>
+        </form>
+    </section>
+
+    <section id="subscriptions">
+        <h2>TV Subscriptions</h2>
+        <form id="dstv-form">
+            <h3>DSTV</h3>
+            <label for="dstv-account">DSTV Account Number:</label>
+            <input type="text" id="dstv-account">
+            <label for="dstv-package">Package:</label>
+            <input type="text" id="dstv-package">
+            <button type="submit">Subscribe</button>
+        </form>
+
+        <form id="gotv-form">
+            <h3>GOTV</h3>
+            <label for="gotv-account">GOTV Account Number:</label>
+            <input type="text" id="gotv-account">
+            <label for="gotv-package">Package:</label>
+            <input type="text" id="gotv-package">
+            <button type="submit">Subscribe</button>
+        </form>
+
+        <form id="startimes-form">
+            <h3>StarTimes</h3>
+            <label for="startimes-account">StarTimes Account Number:</label>
+            <input type="text" id="startimes-account">
+            <label for="startimes-package">Package:</label>
+            <input type="text" id="startimes-package">
+            <button type="submit">Subscribe</button>
+        </form>
+    </section>
+
+    <section id="account">
+        <h2>Account</h2>
+        <p>Manage your account and view transaction history.</p>
+        <!-- Account management and transaction history will go here -->
+    </section>
+
+    <script src="script.js"></script>
+</body>
+</html>
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+}
+
+header {
+    background-color: #333;
+    color: white;
+    padding: 10px 0;
+    text-align: center;
+}
+
+nav ul {
+    list-style: none;
+    padding: 0;
+}
+
+nav ul li {
+    display: inline;
+    margin: 0 15px;
+}
+
+nav ul li a {
+    color: white;
+    text-decoration: none;
+}
+
+section {
+    padding: 20px;
+}
+
+form {
+    margin-top: 20px;
+}
+
+form label {
+    display: block;
+    margin-top: 10px;
+}
+
+form input, form select {
+    padding: 10px;
+    margin-top: 5px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+form button {
+    margin-top: 20px;
+    padding: 10px;
+    background-color: #333;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+document.getElementById('data-form').addEventListener('submit', function(event) {
+    event.preventDefault();
+    const network = document.getElementById('network').value;
+    const dataAmount = document.getElementById('data-amount').value;
+
+    fetch('/buy-data', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ network, dataAmount }),
+    })
+    .then(response => response.text())
+    .then(data => alert(data))
+    .catch(error => console.error('Error:', error));
+});
+
+document.getElementById('electricity-form').addEventListener('submit', function(event) {
+    event.preventDefault();
+    const meterNumber = document.getElementById('meter-number').value;
+    const amount = document.getElementById('amount').value;
+
+    fetch('/pay-electricity', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ meterNumber, amount }),
+    })
+    .then(response => response.text())
+    .then(data => alert(data))
+    .catch(error => console.error('Error:', error));
+});
+
+document.getElementById('dstv-form').addEventListener('submit', function(event) {
+    event.preventDefault();
+    const accountNumber = document.getElementById('dstv-account').value;
+    const package = document.getElementById('dstv-package').value;
+
+    fetch('/subscribe-dstv', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ accountNumber, package }),
+    })
+    .then(response => response.text())
+    .then(data => alert(data))
+    .catch(error => console.error('Error:', error));
+});
+
+document.getElementById('gotv-form').addEventListener('submit', function(event) {
+    event.preventDefault();
+    const accountNumber = document.getElementById('gotv-account').value;
+    const package = document.getElementById('gotv-package').value;
+
+    fetch('/subscribe-gotv', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ accountNumber, package }),
+    })
+    .then(response => response.text())
+    .then(data => alert(data))
+    .catch(error => console.error('Error:', error));
+});
+
+document.getElementById('startimes-form').addEventListener('submit', function(event) {
+    event.preventDefault();
+    const accountNumber = document.getElementById('startimes-account').value;
+    const package = document.getElementById('startimes-package').value;
+
+    fetch('/subscribe-startimes', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ accountNumber, package }),
+    })
+    .then(response => response.text())
+    .then(data => alert(data))
+    .catch(error => console.error('Error:', error));
+});
+const express = require('express');
+const bodyParser = require('body-parser');
+const cors = require('cors');
+
+const app = express();
+app.use(bodyParser.json());
+app.use(cors());
+
+app.post('/buy-data', (req, res) => {
+    const { network, dataAmount } = req.body;
+    // Logic to integrate with data purchase API
+    res.send(`Purchased ${dataAmount} data for ${network}`);
+});
+
+app.post('/pay-electricity', (req, res) => {
+    const { meterNumber, amount } = req.body;
+    // Logic to integrate with electricity payment API
+    res.send(`Paid ${amount} for meter number ${meterNumber}`);
+});
+
+app.post('/subscribe-dstv', (req, res) => {
+    const { accountNumber, package } = req.body;
+    // Logic to integrate with DSTV subscription API
